@@ -5,9 +5,6 @@ import sys; sys.path.append("..")
 import AgentLearn
 
 
-T = 10
-
-
 print("'ForestWalk' Example is started")
 
 
@@ -49,7 +46,5 @@ class Environment(AgentLearn.Environment):
 
 robot = Agent("Roma")
 world = Environment("Forest")
-world.spawn_agent(robot)
-
-for t in range(0, T):
-    world.model_step()
+world.__spawn_agent(robot)
+world.__simulate(10, 0.5)
