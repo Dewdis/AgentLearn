@@ -14,6 +14,8 @@ Agent's "physical" interaction with Environment
 is described in "Environment" instances.
 """
 class Agent:
+    attitude, position = None, None
+
     def __init__(self, name):
         self.name = name
         print("Agent '" + name + "' is created!")
@@ -22,8 +24,8 @@ class Agent:
         print("Agent '" + self.name + "': MEASURE method is undefined!")
         pass
 
-    def get_prize(self):
-        print("Agent '" + self.name + "': GET_PRIZE method is undefined!")
+    def get_reward(self, reward):
+        print("Agent '" + self.name + "': GET_REWARD method is undefined!")
         pass
 
     def action(self):
@@ -44,7 +46,7 @@ class Environment:
     def __init__(self, name):
         self.name = name
         print("Environment '" + self.name + "' is created!")
-        self.visualize()
+        self.visualize_map()
 
     def visualize_map(self):
         print("Environment '" + self.name + "': VISUALIZE_MAP method is undefined!")
@@ -54,12 +56,12 @@ class Environment:
         print("Environment '" + self.name + "': VISUALIZE_AGENT method is undefined!")
         pass
 
-    def __visualize(self):
+    def visualize(self):
         self.visualize_map()
         for agent in self.agents:
-            self.visualize_agent(agent.__attitude, agent.__position)
+            self.visualize_agent(agent)
 
-    def __spawn_agent(self, agent):
+    def spawn_agent(self, agent):
         self.agents.append(agent)
         print("Agent '" + agent.name + "' is SPAWNED in environment '" + self.name + "'")
 
@@ -67,20 +69,24 @@ class Environment:
         print("Environment '" + self.name + "': MEASURE method is undefined!")
         pass
 
+    def calc_reward(self, agent):
+        print("Environment '" + self.name + "': CALC_REWARD method is undefined!")
+        return None
+
     def effect(self, agent, action):
         print("Environment '" + self.name + "': EFFECT method is undefined!")
         pass
 
-    def __model_step(self):
+    def model_step(self):
         # TODO: firstly - control, secondary - EFFECT
         # (for multiple agents)
         for agent in self.agents:
-            agent.measure(self.measure(agent.__attitude, agent.__position))
-            agent.get_prize(self.calc_prize(agent))
+            agent.measure(self.measure(agent))
+            agent.get_reward(self.calc_reward(agent))
             self.effect(agent, agent.action())
-        self.__visualize()
+        self.visualize()
 
-    def __simulate(self, T, delay):
+    def simulate(self, T, delay):
         for t in range(T):
-            self.__model_step()
-            time.delay(delay)
+            self.model_step()
+            time.sleep(delay)

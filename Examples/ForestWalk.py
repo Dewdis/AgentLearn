@@ -30,7 +30,7 @@ class Environment(AgentLearn.Environment):
         [2,2,2,2,2,2,2,2]
     ]
 
-    def visualize(self):
+    def visualize_map(self):
         # print(matplotlib.get_backend())
         matplotlib.rcParams["toolbar"] = "None"
         matplotlib.pyplot.gcf().canvas.set_window_title(self.name)
@@ -46,5 +46,5 @@ class Environment(AgentLearn.Environment):
 
 robot = Agent("Roma")
 world = Environment("Forest")
-world.__spawn_agent(robot)
-world.__simulate(10, 0.5)
+world.spawn_agent(robot)
+world.simulate(10, 0.5)
