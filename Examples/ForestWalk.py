@@ -41,7 +41,8 @@ class Environment(AgentLearn.Environment):
         cmap = matplotlib.colors.ListedColormap(colors)
         norm = matplotlib.colors.BoundaryNorm(bounds, cmap.N)
         matplotlib.pyplot.imshow(self.map, cmap=cmap, norm=norm)
-        matplotlib.pyplot.show()
+        #matplotlib.pyplot.show()
+        #matplotlib.pyplot.draw()
 
 
 robot = Agent("Roma")

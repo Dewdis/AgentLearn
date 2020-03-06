@@ -1,4 +1,5 @@
 import time
+import matplotlib
 
 # TODO:
 # 1. One Agent can't simultaneously live
@@ -89,4 +90,12 @@ class Environment:
     def simulate(self, T, delay):
         for t in range(T):
             self.model_step()
-            time.sleep(delay)
+            try:
+                matplotlib.pyplot.draw()
+                matplotlib.pyplot.pause(delay)
+            except Exception as GraphicsException:
+                print("\nERROR: matplotlib can't draw image")
+                print(GraphicsException)
+                print("Probably, window was closed")
+                exit(0)
+            #time.sleep(delay)
